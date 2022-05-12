@@ -35,8 +35,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 OF SUCH DAMAGE.
 */
 #include "gd32f10x_it.h"
-#include "main.h"
-#include "systick.h"
 
 /*!
     \brief      this function handles NMI exception
@@ -138,5 +136,4 @@ void PendSV_Handler(void)
 */
 void SysTick_Handler(void)
 {
-	systick_IncTick();
 }
