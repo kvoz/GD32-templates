@@ -1,0 +1,1 @@
+Place here core headers from Firmware\CMSIS: core_cm4.h, core_cm4_simd.h, core_cmFunc.h, core_cmInstr.h and folders Include, Source

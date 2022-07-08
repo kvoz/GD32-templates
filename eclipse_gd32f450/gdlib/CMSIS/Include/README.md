@@ -1,0 +1,1 @@
+Place here system headers from Firmware\CMSIS\GD\DeviceName\Include: gd32f4xx.h, system_gd32f4xx.h
