@@ -1,6 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>body {
   max-width: 980px;
-  border: 1px solid #ddd;
   outline: 1300px solid #fff;
   margin: 16px auto;
 }
@@ -899,6 +898,10 @@ body .markdown-body
   vertical-align: middle;
 }
 
+.markdown-body diagram-div, .markdown-body div.uml-sequence-diagram, .markdown-body, div.uml-flowchart {
+  overflow: auto;
+}
+
 /* Media */
 @media only screen and (min-width: 480px) {
   .markdown-body {
@@ -1079,47 +1082,56 @@ body .markdown-body
 <h2 id="creating-new-project-eclipse">Creating new project (Eclipse)<a class="headerlink" href="#creating-new-project-eclipse" title="Permanent link"></a></h2>
 <ol>
 <li>Run <strong>File - New - C/C++ Project</strong>
-<img alt="new_project_eclipse" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/new_project_eclipse.png" /></li>
+<img alt="new_project_eclipse" src="/E:/repos/gd_templates/readme_img/new_project_eclipse.png" /></li>
 <li>Import files from template file system
-<img alt="import_fs" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/import_fs.png" /></li>
+<img alt="import_fs" src="/E:/repos/gd_templates/readme_img/import_fs.png" /></li>
 <li>Download Firmware Library for choosen GD32 MCU from official site, unpack it to elsewhere</li>
 <li>Copy firmware files to project:<ul>
 <li>to directory <strong>gdlib/CMSIS</strong> copy core headers;</li>
 <li>to directory <strong>gdlib/CMSIS/Include</strong> and <strong>gdlib/CMSIS/Source</strong> common system description files (except startup scripts);</li>
-<li>to directory <strong>gdlib/Peripherals</strong> files from standard_peripheral directory (folders Include and Source)</li>
+<li>to directory <strong>gdlib/Peripherals</strong> files from standard_peripheral directory (folders <strong>Include</strong> and <strong>Source</strong>)</li>
 </ul>
 </li>
 <li>Import C/C++ Project Settings from xml file
-<img alt="import_fs" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/import_settings.png" /></li>
+<img alt="import_fs" src="/E:/repos/gd_templates/readme_img/import_settings.png" /></li>
 <li>Configurate project settings in <strong>C/C++ build - Settings</strong>:<ul>
 <li>checkout core config and FPU work in <strong>Target Processor</strong>
-<img alt="target_processor_settings" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/target_processor_settings.png" /></li>
+<img alt="target_processor_settings" src="/E:/repos/gd_templates/readme_img/target_processor_settings.png" /></li>
 <li>include ld script in <strong>GNU Arm Cross C Linker - General</strong>
-<img alt="linker_general_settings" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/linker_general_settings.png" /></li>
+<img alt="linker_general_settings" src="/E:/repos/gd_templates/readme_img/linker_general_settings.png" /></li>
 <li>enable flags of Linker: <em>Use newlib-nano</em> and <em>Do not use syscalls</em> in <strong>GNU Arm Cross C Linker - Miscellaneous</strong>
-<img alt="linker_misc_settings" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/linker_misc_settings.png" /></li>
+<img alt="linker_misc_settings" src="/E:/repos/gd_templates/readme_img/linker_misc_settings.png" /></li>
 <li>(optional) Add to linker other flags: <code>-Wl,--print-memory-usage</code> in <strong>GNU Arm Cross C Linker - Miscellaneous</strong></li>
 <li>(optional) Select correct device name from <strong>Devices - Device selection</strong>
-<img alt="devices_settings" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/devices_settings.png" /></li>
+<img alt="devices_settings" src="/E:/repos/gd_templates/readme_img/devices_settings.png" /></li>
 <li>(optional) Configurate post-build steps as: <code>arm-none-eabi-objcopy -O binary "test.elf" "test.bin"; arm-none-eabi-objdump -D "test.elf"&gt; "test.dump"</code> (correct filenames to actual)
-<img alt="buildsteps_posbuild_settings" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/buildsteps_posbuild_settings.png" /></li>
+<img alt="buildsteps_posbuild_settings" src="/E:/repos/gd_templates/readme_img/buildsteps_posbuild_settings.png" /></li>
 <li>(optional) in section <strong>Toolchain</strong> enable <em>Create Extended Listing</em> and then in <strong>Tool Setting</strong> configurate listing options</li>
 </ul>
 </li>
 <li>Duplicate configurations for Release (if need). Recommended to setup otimization level for compiler to -Os and debug level to <em>None</em> </li>
 <li>Configurate launcher for debugging:<ul>
 <li>Create new launcher</li>
-<li>Add to <strong>Debugger - OpenOCD setup - Config options</strong>: <code>-f "interface/stlink.cfg" -f "target/stm32f1x.cfg"</code></li>
+<li>Add to <strong>Debugger - OpenOCD setup - Config options</strong>:<ul>
+<li>Interface options if using st-link: <code>-f "interface/stlink.cfg"</code> or if using evalboard: <code>-f "interface/cmsis-dap.cfg"</code></li>
+<li>Target options if using F1xx series: <code>-f "target/stm32f1x.cfg"</code> or if using F4xx series: <code>-f "target/stm32f4x.cfg"</code></li>
+</ul>
+</li>
 <li>Enable <em>Start GDB Session</em> in <strong>Debugger - GDB client setup</strong></li>
 <li>Disable <em>Enable Arm Semihosting</em> in <strong>Startup - Initialization commands</strong>
-<img alt="launcher_debug" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/launcher_debug.png" /></li>
+<img alt="launcher_debug" src="/E:/repos/gd_templates/readme_img/launcher_debug.png" /></li>
 </ul>
 </li>
 <li>Configurate launcher for program and verify (without debugging):<ul>
 <li>Create new launcher</li>
-<li>Add to <strong>Debugger - OpenOCD setup - Config options</strong>: <code>-f "interface/stlink.cfg" -f "target/stm32f1x.cfg" -c "program ${config_name:${project_name}}/${project_name}.hex verify reset exit"</code></li>
+<li>Add to <strong>Debugger - OpenOCD setup - Config options</strong>: <ul>
+<li>Interface options if using st-link: <code>-f "interface/stlink.cfg"</code> or if using evalboard: <code>-f "interface/cmsis-dap.cfg"</code></li>
+<li>Target options if using F1xx series: <code>-f "target/stm32f1x.cfg"</code> or if using F4xx series: <code>-f "target/stm32f4x.cfg"</code></li>
+<li>Option to run program command: <code>-c "program ${config_name:${project_name}}/${project_name}.hex verify reset exit"</code></li>
+</ul>
+</li>
 <li>Disable <em>Start GDB Session</em> in <strong>Debugger - GDB client setup</strong>
-<img alt="launcher_program" src="/C:/Users/kvokv/Documents/repos/gd_templates/readme_img/launcher_program.png" /></li>
+<img alt="launcher_program" src="/E:/repos/gd_templates/readme_img/launcher_program.png" /></li>
 </ul>
 </li>
 </ol></article></body></html>

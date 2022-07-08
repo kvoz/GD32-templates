@@ -21,7 +21,7 @@ Project templates for developing GD32 MCU based devices
 1. Copy firmware files to project:
 	- to directory **gdlib/CMSIS** copy core headers;
 	- to directory **gdlib/CMSIS/Include** and **gdlib/CMSIS/Source** common system description files (except startup scripts);
-	- to directory **gdlib/Peripherals** files from standard_peripheral directory (folders Include and Source)
+	- to directory **gdlib/Peripherals** files from standard_peripheral directory (folders **Include** and **Source**)
 1. Import C/C++ Project Settings from xml file
 ![import_fs](readme_img/import_settings.png)
 1. Configurate project settings in **C/C++ build - Settings**:
@@ -40,12 +40,17 @@ Project templates for developing GD32 MCU based devices
 1. Duplicate configurations for Release (if need). Recommended to setup otimization level for compiler to -Os and debug level to *None* 
 1. Configurate launcher for debugging:
 	- Create new launcher
-	- Add to **Debugger - OpenOCD setup - Config options**: `-f "interface/stlink.cfg" -f "target/stm32f1x.cfg"`
+	- Add to **Debugger - OpenOCD setup - Config options**:
+		- Interface options if using st-link: `-f "interface/stlink.cfg"` or if using evalboard: `-f "interface/cmsis-dap.cfg"`
+		- Target options if using F1xx series: `-f "target/stm32f1x.cfg"` or if using F4xx series: `-f "target/stm32f4x.cfg"`
 	- Enable *Start GDB Session* in **Debugger - GDB client setup**
 	- Disable *Enable Arm Semihosting* in **Startup - Initialization commands**
 	![launcher_debug](readme_img/launcher_debug.png)
 1. Configurate launcher for program and verify (without debugging):
 	- Create new launcher
-	- Add to **Debugger - OpenOCD setup - Config options**: `-f "interface/stlink.cfg" -f "target/stm32f1x.cfg" -c "program ${config_name:${project_name}}/${project_name}.hex verify reset exit"`
+	- Add to **Debugger - OpenOCD setup - Config options**: 
+		- Interface options if using st-link: `-f "interface/stlink.cfg"` or if using evalboard: `-f "interface/cmsis-dap.cfg"`
+		- Target options if using F1xx series: `-f "target/stm32f1x.cfg"` or if using F4xx series: `-f "target/stm32f4x.cfg"`
+		- Option to run program command: `-c "program ${config_name:${project_name}}/${project_name}.hex verify reset exit"`
 	- Disable *Start GDB Session* in **Debugger - GDB client setup**
 	![launcher_program](readme_img/launcher_program.png)
