@@ -54,3 +54,5 @@ Project templates for developing GD32 MCU based devices
 		- Option to run program command: `-c "program ${config_name:${project_name}}/${project_name}.hex verify reset exit"`
 	- Disable *Start GDB Session* in **Debugger - GDB client setup**
 	![launcher_program](readme_img/launcher_program.png)
+1. If there is need to select exact adapter for flash or debug
+	![debug_adapter_serial](readme_img/debug_adapter_serial.png)
